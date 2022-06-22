@@ -1,0 +1,28 @@
+{
+  "navs": [
+    {
+      "name": "Google",
+      "url": "https://www.google.com",
+      "description": "Google is a search engine",
+      "tags": ["search", "engine", "google"]
+    },
+    {
+      "name": "Dribbble",
+      "url": "https://dribbble.com/",
+      "description": "Explore the world’s leading design portfolios",
+      "tags": ["design", "艺术"]
+    },
+    {
+      "name": "Tinypng",
+      "url": "https://tinypng.com/",
+      "description": "Smart WebP, PNG and JPEG compression",
+      "tags": ["图片压缩"]
+    },
+    {
+      "name": "Macwk",
+      "url": "https://macwk.com/bibei",
+      "description": "装机必备",
+      "tags": ["mac", "软件"]
+    }
+  ]
+}
