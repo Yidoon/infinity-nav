@@ -20,7 +20,7 @@ export default function NavCard(props: NavItem) {
 
   return (
     <div className={_classNames} onClick={handleClick}>
-      <div className="text-xl">{name}</div>
+      <div className="text-xl">{name || url}</div>
       <div className="text-sm text-slate-500 mt-2 ml-1" title={description}>
         {description}
       </div>

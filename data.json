@@ -23,6 +23,7 @@
       "url": "https://macwk.com/bibei",
       "description": "装机必备",
       "tags": ["mac", "软件"]
-    }
+    },
+    { "url": "www.baidu.com", "name": "", "description": "", "tags": [] }
   ]
 }

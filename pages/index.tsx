@@ -4,8 +4,9 @@ import NavCard from "@/components/NavCard";
 import fsPromises from "fs/promises";
 import path from "path";
 import { NavItem } from "@/types/index";
-import { Button, Form, Input, Popover, Space } from "antd";
-import { useMemo, useState } from "react";
+import { Button, Form, Input, Popover, Space, Spin } from "antd";
+import { useEffect, useMemo, useState } from "react";
+import useSwr from "swr";
 
 const FORM_LAYOUT = {
   labelCol: {
@@ -18,15 +19,23 @@ const tailLayout = {
 interface Props {
   navs: NavItem[];
 }
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const Home: NextPage<Props> = (props) => {
-  const { navs } = props;
   const [searchKey, setSearchKey] = useState<string>("");
+  const { data, error } = useSwr("/api/upload-nav", fetcher);
+  console.log(data, "data");
+
+  const loading = useMemo(() => {
+    return data?.navs?.length <= 0;
+  }, [data]);
+  const navs = useMemo(() => {
+    if (data?.navs?.length > 0) return data.navs;
+    return [];
+  }, [data]);
   const [uploadForm] = Form.useForm();
 
   const _navs = useMemo(() => {
-    console.log(searchKey, "searchKey");
-
-    return navs.filter((item) => {
+    return navs.filter((item: NavItem) => {
       return (
         item.name.indexOf(searchKey) > -1 ||
         item.description.indexOf(searchKey) > -1 ||
@@ -35,9 +44,11 @@ const Home: NextPage<Props> = (props) => {
     });
   }, [searchKey, navs]);
 
-  const els = _navs.map((nav, index) => {
+  const els = _navs.map((nav: NavItem, index: number) => {
     return <NavCard {...nav} key={index} />;
   });
+  console.log(_navs, "_navs");
+
   const handleSearch = (e) => {
     if (e.key === "Enter") {
       setSearchKey(e.target.value);
@@ -55,6 +66,7 @@ const Home: NextPage<Props> = (props) => {
       body: JSON.stringify(values),
     });
   };
+
   const renderUploadForm = () => {
     return (
       <Form form={uploadForm} {...FORM_LAYOUT} onFinish={handleSubmit}>
@@ -108,11 +120,14 @@ const Home: NextPage<Props> = (props) => {
   const renderNavs = () => {
     return <div className="flex mt-16 gap-x-4 flex-wrap gap-y-4">{els}</div>;
   };
+
   return (
-    <div className={styles.container}>
-      {renderHeader()}
-      {renderNavs()}
-    </div>
+    <Spin spinning={loading}>
+      <div className={styles.container}>
+        {renderHeader()}
+        {renderNavs()}
+      </div>
+    </Spin>
   );
 };
 
