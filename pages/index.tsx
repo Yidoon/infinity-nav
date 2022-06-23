@@ -4,14 +4,25 @@ import NavCard from "@/components/NavCard";
 import fsPromises from "fs/promises";
 import path from "path";
 import { NavItem } from "@/types/index";
-import { Button, Input } from "@chakra-ui/react";
+import { Button, Form, Input, Popover, Space } from "antd";
 import { useMemo, useState } from "react";
+
+const FORM_LAYOUT = {
+  labelCol: {
+    span: 5,
+  },
+};
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
 interface Props {
   navs: NavItem[];
 }
 const Home: NextPage<Props> = (props) => {
   const { navs } = props;
   const [searchKey, setSearchKey] = useState<string>("");
+  const [uploadForm] = Form.useForm();
+
   const _navs = useMemo(() => {
     console.log(searchKey, "searchKey");
 
@@ -33,6 +44,45 @@ const Home: NextPage<Props> = (props) => {
     }
     e.preventDefault();
   };
+  const handleRest = () => {};
+  const handleSubmit = () => {
+    const values = uploadForm.getFieldsValue();
+    fetch("/api/upload-nav", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+  };
+  const renderUploadForm = () => {
+    return (
+      <Form form={uploadForm} {...FORM_LAYOUT} onFinish={handleSubmit}>
+        <Form.Item label="Url" name="url">
+          <Input placeholder="Website link" />
+        </Form.Item>
+        <Form.Item label="Name" name="name">
+          <Input placeholder="Display name" />
+        </Form.Item>
+        <Form.Item label="Tag" name="tag">
+          <Input placeholder="Display name" />
+        </Form.Item>
+        <Form.Item label="Description" name="description">
+          <Input.TextArea />
+        </Form.Item>
+        <Form.Item {...tailLayout} style={{ textAlign: "right" }}>
+          <Space size={8}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+            <Button htmlType="button" onClick={handleRest}>
+              Reset
+            </Button>
+          </Space>
+        </Form.Item>
+      </Form>
+    );
+  };
   const renderHeader = () => {
     return (
       <div className="flex justify-between">
@@ -40,7 +90,16 @@ const Home: NextPage<Props> = (props) => {
           <Input placeholder="Just Search you want" onKeyUp={handleSearch} />
         </div>
         <div className="flex gap-x-4">
-          <Button colorScheme="blue">UploadLink</Button>
+          <Popover
+            content={renderUploadForm()}
+            title="Upload Link"
+            trigger="click"
+            overlayInnerStyle={{ width: 460 }}
+          >
+            <Button type="primary" shape="round">
+              Upload Link
+            </Button>
+          </Popover>
         </div>
       </div>
     );
