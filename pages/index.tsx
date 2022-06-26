@@ -45,9 +45,9 @@ const Home: NextPage<Props> = (props) => {
     return <NavCard {...nav} key={index} />;
   });
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      setSearchKey(e.target.value);
+      setSearchKey((e.target as HTMLInputElement).value);
     }
     e.preventDefault();
   };
