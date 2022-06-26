@@ -4,7 +4,7 @@ import classnames from "classnames";
 import { NavItem } from "@/types/index";
 
 export default function NavCard(props: NavItem) {
-  const { name, description, tags, url } = props;
+  const { description, tags, url, title, icon } = props;
 
   const _tags = useMemo(() => {
     return tags.map((t) => `#${t}`).join(" ");
@@ -20,8 +20,17 @@ export default function NavCard(props: NavItem) {
 
   return (
     <div className={_classNames} onClick={handleClick}>
-      <div className="text-xl">{name || url}</div>
-      <div className="text-sm text-slate-500 mt-2 ml-1" title={description}>
+      <div className="flex gap-x-2 items-center">
+        <img src={icon} className="h-5 w-5" alt="" />
+        <div className={classnames("text-xl", styles.titleText)}>{title}</div>
+      </div>
+      <div
+        className={classnames(
+          "text-sm text-slate-500 mt-2 ml-1",
+          styles.max3RowText
+        )}
+        title={description}
+      >
         {description}
       </div>
       <div className="text-xs text-slate-400 mt-1">{_tags}</div>

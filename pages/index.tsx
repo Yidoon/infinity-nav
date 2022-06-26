@@ -19,35 +19,31 @@ const tailLayout = {
 interface Props {
   navs: NavItem[];
 }
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const Home: NextPage<Props> = (props) => {
   const [searchKey, setSearchKey] = useState<string>("");
-  const { data, error } = useSwr("/api/upload-nav", fetcher);
-  console.log(data, "data");
-
-  const loading = useMemo(() => {
-    return data?.navs?.length <= 0;
-  }, [data]);
-  const navs = useMemo(() => {
-    if (data?.navs?.length > 0) return data.navs;
-    return [];
-  }, [data]);
+  const [data, setData] = useState<NavItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const reqNavs = async () => {
+    const res = await fetch("/api/upload-nav").then((res) => res.json());
+    setData(res.navs);
+    setLoading(false);
+  };
   const [uploadForm] = Form.useForm();
 
   const _navs = useMemo(() => {
-    return navs.filter((item: NavItem) => {
+    return data.filter((item: NavItem) => {
       return (
-        item.name.indexOf(searchKey) > -1 ||
+        item.title.indexOf(searchKey) > -1 ||
         item.description.indexOf(searchKey) > -1 ||
         item.tags.join("").indexOf(searchKey) > -1
       );
     });
-  }, [searchKey, navs]);
+  }, [searchKey, data]);
 
   const els = _navs.map((nav: NavItem, index: number) => {
     return <NavCard {...nav} key={index} />;
   });
-  console.log(_navs, "_navs");
 
   const handleSearch = (e) => {
     if (e.key === "Enter") {
@@ -65,6 +61,7 @@ const Home: NextPage<Props> = (props) => {
       },
       body: JSON.stringify(values),
     });
+    reqNavs();
   };
 
   const renderUploadForm = () => {
@@ -73,13 +70,10 @@ const Home: NextPage<Props> = (props) => {
         <Form.Item label="Url" name="url">
           <Input placeholder="Website link" />
         </Form.Item>
-        <Form.Item label="Name" name="name">
-          <Input placeholder="Display name" />
-        </Form.Item>
         <Form.Item label="Tag" name="tag">
-          <Input placeholder="Display name" />
+          <Input placeholder="Tags" />
         </Form.Item>
-        <Form.Item label="Description" name="description">
+        <Form.Item label="remark" name="remark">
           <Input.TextArea />
         </Form.Item>
         <Form.Item {...tailLayout} style={{ textAlign: "right" }}>
@@ -120,6 +114,11 @@ const Home: NextPage<Props> = (props) => {
   const renderNavs = () => {
     return <div className="flex mt-16 gap-x-4 flex-wrap gap-y-4">{els}</div>;
   };
+
+  useEffect(() => {
+    setLoading(true);
+    reqNavs();
+  }, []);
 
   return (
     <Spin spinning={loading}>
