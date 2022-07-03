@@ -2,12 +2,25 @@ import React, { useMemo } from "react";
 import styles from "./index.module.css";
 import classnames from "classnames";
 import { NavItem } from "@/types/index";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
-export default function NavCard(props: NavItem) {
-  const { description, tags, url, title, icon } = props;
+interface IProps {
+  data: NavItem;
+  handleEdit: (data: NavItem) => void;
+  handleDelete: (data: NavItem) => void;
+}
+export default function NavCard(props: IProps) {
+  const { data } = props;
+  const { description, tags, url, title, icon } = data;
 
   const _tags = useMemo(() => {
-    return tags.map((t) => `#${t}`).join(" ");
+    const arr = tags ? tags.split(";") : [];
+    console.log(arr, "arr");
+
+    if (arr.length > 0) {
+      return arr.map((t) => `#${t}`).join(" ");
+    }
+    return "";
   }, [tags]);
 
   const _classNames = classnames(
@@ -17,7 +30,16 @@ export default function NavCard(props: NavItem) {
   const handleClick = () => {
     window.open(url, "_blank");
   };
-
+  const _handleEdit = (e) => {
+    props.handleEdit(data);
+    e.preventDefault();
+    e.stopPropagation();
+  };
+  const _handleDelete = (e) => {
+    props.handleDelete(data);
+    e.preventDefault();
+    e.stopPropagation();
+  };
   return (
     <div className={_classNames} onClick={handleClick}>
       <div className="flex gap-x-2 items-center">
@@ -34,6 +56,10 @@ export default function NavCard(props: NavItem) {
         {description}
       </div>
       <div className="text-xs text-slate-400 mt-1">{_tags}</div>
+      <div className={`${styles.editArea} rounded-md flex flex-col gap-y-2`}>
+        <EditOutlined className={styles.handleIcon} onClick={_handleEdit} />
+        <DeleteOutlined className={styles.handleIcon} onClick={_handleDelete} />
+      </div>
     </div>
   );
 }

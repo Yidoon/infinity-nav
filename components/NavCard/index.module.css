@@ -4,6 +4,7 @@
   background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
   /* background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%); */
   /* background-image: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%); */
+  position: relative;
 }
 .navCardDes {
   overflow: hidden;
@@ -26,4 +27,30 @@
   word-wrap: break-word;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+}
+.editArea {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 0px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+.handleIcon {
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+}
+.handleIcon:hover {
+  color: aquamarine;
+}
+
+.navCard:hover .editArea {
+  opacity: 1;
+  width: 60px;
 }
