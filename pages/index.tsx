@@ -36,21 +36,11 @@ const Home: NextPage<Props> = (props) => {
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
 
   const reqNavs = async () => {
-    const res = await fetch("/api/upload-nav").then((res) => res.json());
-    setData(res.navs);
+    const res = await fetch("/api/navs").then((res) => res.json());
+    setData(res.data);
     setLoading(false);
   };
   const [uploadForm] = Form.useForm();
-
-  const _navs = useMemo(() => {
-    return data.filter((item: NavItem) => {
-      return (
-        item.title.indexOf(searchKey) > -1 ||
-        item.description.indexOf(searchKey) > -1 ||
-        item.tags.indexOf(searchKey) > -1
-      );
-    });
-  }, [searchKey, data]);
 
   const handleEdit = (item: NavItem) => {
     console.log(item, "item");
@@ -60,12 +50,12 @@ const Home: NextPage<Props> = (props) => {
     setShowEditModal(true);
   };
   const handleDelete = async (item: NavItem) => {
-    const res = await fetch("/api/upload-nav", {
+    const res = await fetch("/api/navs", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ url: item.url }),
+      body: JSON.stringify({ id: item.id }),
     }).then((res) => res.json());
     if (res.code !== 0) {
       message.error(res.msg);
@@ -76,7 +66,7 @@ const Home: NextPage<Props> = (props) => {
   };
   const handleEditSubimt = async () => {
     const values = uploadForm.getFieldsValue();
-    const res = await fetch("/api/upload-nav", {
+    const res = await fetch("/api/navs", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -91,7 +81,7 @@ const Home: NextPage<Props> = (props) => {
     setShowEditModal(false);
     reqNavs();
   };
-  const els = _navs.map((nav: NavItem, index: number) => {
+  const els = data.map((nav: NavItem, index: number) => {
     return (
       <NavCard
         data={nav}
@@ -111,7 +101,7 @@ const Home: NextPage<Props> = (props) => {
   const handleRest = () => {};
   const handleSubmit = async () => {
     const values = uploadForm.getFieldsValue();
-    const res = await fetch("/api/upload-nav", {
+    const res = await fetch("/api/navs", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -174,6 +164,7 @@ const Home: NextPage<Props> = (props) => {
           onFinish={handleSubmit}
           onReset={handleRest}
           hideBottomBtn
+          isEdit={showEditModal}
         />
       </Modal>
     );

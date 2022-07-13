@@ -15,7 +15,6 @@ export default function NavCard(props: IProps) {
 
   const _tags = useMemo(() => {
     const arr = tags ? tags.split(";") : [];
-    console.log(arr, "arr");
 
     if (arr.length > 0) {
       return arr.map((t) => `#${t}`).join(" ");

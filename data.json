@@ -1,1 +1,36 @@
-{"navs":[{"url":"https://www.v2ex.com/","description":"创意工作者的社区。讨论编程、设计、硬件、游戏等令人激动的话题。","title":"V2EX","tags":"","icon":"https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.v2ex.com/&size=16","remark":""},{"url":"https://macwk.com/bibei","description":"MAC应用软件,每天更新大量精品mac软件,为您提供优质的mac软件,mac破解版软件下载","title":"装机必备MacWKMacWK","tags":"","icon":"https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://macwk.com/bibei&size=16","remark":""},{"url":"https://www.urlzt.com/","description":"极强域名检测是一款节点化实时检测报警通知系统，使用本工具你可以知道域名状态、链接状态、网络状态、链接是否打开异常、域名是否掉备案等，并通过微信、邮件、钉钉、短信或电话报警提醒您，让业务更稳定，降低运营损失。","title":"域名检测_链接检测_网站监控-极强检测报警系统","tags":"","icon":"https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.urlzt.com/&size=16","remark":""},{"url":"https://www.nazhumi.com/","description":"哪煮米是一家专业的域名比价平台，提供超过1500种域名后缀，超过50家全球域名注册商的在线比价，一键选到你满意的注册商","title":"哪煮米 - 专业域名比价平台 - 域名注册哪家便宜 - 域名注册商导航 - 域名后缀搜索","tags":"域名;比价","icon":"https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.nazhumi.com/&size=16","remark":""}]}
+{
+  "navs": [
+    {
+      "url": "https://www.v2ex.com/",
+      "description": "创意工作者的社区。讨论编程、设计、硬件、游戏等令人激动的话题。",
+      "title": "V2EX",
+      "tags": "",
+      "icon": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.v2ex.com/&size=16",
+      "remark": ""
+    },
+    {
+      "url": "https://macwk.com/bibei",
+      "description": "MAC应用软件,每天更新大量精品mac软件,为您提供优质的mac软件,mac破解版软件下载",
+      "title": "装机必备MacWKMacWK",
+      "tags": "",
+      "icon": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://macwk.com/bibei&size=16",
+      "remark": ""
+    },
+    {
+      "url": "https://www.urlzt.com/",
+      "description": "极强域名检测是一款节点化实时检测报警通知系统，使用本工具你可以知道域名状态、链接状态、网络状态、链接是否打开异常、域名是否掉备案等，并通过微信、邮件、钉钉、短信或电话报警提醒您，让业务更稳定，降低运营损失。",
+      "title": "域名检测_链接检测_网站监控-极强检测报警系统",
+      "tags": "",
+      "icon": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.urlzt.com/&size=16",
+      "remark": ""
+    },
+    {
+      "url": "https://www.nazhumi.com/",
+      "description": "哪煮米是一家专业的域名比价平台，提供超过1500种域名后缀，超过50家全球域名注册商的在线比价，一键选到你满意的注册商",
+      "title": "哪煮米 - 专业域名比价平台 - 域名注册哪家便宜 - 域名注册商导航 - 域名后缀搜索",
+      "tags": "域名;比价",
+      "icon": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.nazhumi.com/&size=16",
+      "remark": ""
+    }
+  ]
+}

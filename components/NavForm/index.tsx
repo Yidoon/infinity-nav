@@ -14,13 +14,17 @@ interface IProps {
   onFinish?: () => void;
   onReset?: () => void;
   hideBottomBtn?: boolean;
+  isEdit?: boolean;
 }
 const NavForm = (props: IProps) => {
-  const { form, onFinish, onReset, hideBottomBtn = false } = props;
+  const { form, onFinish, onReset, hideBottomBtn = false, isEdit } = props;
   return (
     <Form form={form} {...FORM_LAYOUT} onFinish={onFinish}>
+      <Form.Item name="id" hidden>
+        <Input />
+      </Form.Item>
       <Form.Item label="Url" name="url">
-        <Input placeholder="Website link" />
+        <Input placeholder="Website link" disabled={isEdit} />
       </Form.Item>
       <Form.Item label="Tag" name="tags">
         <Input placeholder="Tags" />
