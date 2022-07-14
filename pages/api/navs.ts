@@ -85,8 +85,35 @@ const postNav = async (req: NextApiRequest) => {
   });
   return { code: 0, data: "", msg: "" };
 };
-const getNav = async () => {
-  const navs = await prisma.navs.findMany();
+const getNav = async (req: NextApiRequest) => {
+  const params = req.query;
+  console.log(params, "params");
+  const navs = await prisma.navs.findMany({
+    where: {
+      OR: [
+        {
+          url: {
+            contains: params?.searchKey as string,
+          },
+        },
+        {
+          title: {
+            contains: params?.searchKey as string,
+          },
+        },
+        {
+          description: {
+            contains: params?.searchKey as string,
+          },
+        },
+        {
+          tags: {
+            contains: params?.searchKey as string,
+          },
+        },
+      ],
+    },
+  });
   return { msg: "", code: 0, data: navs };
 };
 const deleteNav = async (req: NextApiRequest) => {
@@ -111,7 +138,7 @@ export default async function handler(
     res.status(200).send(r as any);
   }
   if (req.method === "GET") {
-    const r = await getNav();
+    const r = await getNav(req);
     res.status(200).send(r as any);
   }
   if (req.method === "DELETE") {

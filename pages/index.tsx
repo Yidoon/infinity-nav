@@ -30,13 +30,14 @@ interface Props {
 }
 
 const Home: NextPage<Props> = (props) => {
-  const [searchKey, setSearchKey] = useState<string>("");
   const [data, setData] = useState<NavItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
 
-  const reqNavs = async () => {
-    const res = await fetch("/api/navs").then((res) => res.json());
+  const reqNavs = async (searchKey?: string) => {
+    const res = await fetch(`/api/navs?searchKey=${searchKey || ""}`).then(
+      (res) => res.json()
+    );
     setData(res.data);
     setLoading(false);
   };
@@ -94,7 +95,8 @@ const Home: NextPage<Props> = (props) => {
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      setSearchKey((e.target as HTMLInputElement).value);
+      // setSearchKey();
+      reqNavs((e.target as HTMLInputElement).value);
     }
     e.preventDefault();
   };
@@ -119,7 +121,10 @@ const Home: NextPage<Props> = (props) => {
     return (
       <div className="flex justify-between">
         <div style={{ width: "40%" }}>
-          <Input placeholder="Just Search you want" onKeyUp={handleSearch} />
+          <Input.Search
+            placeholder="Just Search you want"
+            onKeyUp={handleSearch}
+          />
         </div>
         <div className="flex gap-x-4">
           <Popover
