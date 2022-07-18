@@ -12,10 +12,15 @@ import {
   message,
   Modal,
   Popover,
-  Space,
   Spin,
+  Switch,
+  Layout,
+  Tooltip,
 } from "antd";
+import { CloudUploadOutlined } from "@ant-design/icons";
 import { useEffect, useMemo, useState } from "react";
+
+const { Header, Footer, Sider, Content } = Layout;
 
 const FORM_LAYOUT = {
   labelCol: {
@@ -117,16 +122,35 @@ const Home: NextPage<Props> = (props) => {
     setLoading(true);
     reqNavs();
   };
-  const renderHeader = () => {
+  const renderSearch = () => {
     return (
-      <div className="flex justify-between">
-        <div style={{ width: "40%" }}>
-          <Input.Search
-            placeholder="Just Search you want"
+      <div className="flex justify-center mt-8">
+        <div style={{ width: "60%" }}>
+          <Input
+            size="large"
+            style={{ borderRadius: "50px" }}
+            placeholder="搜索"
             onKeyUp={handleSearch}
           />
         </div>
-        <div className="flex gap-x-4">
+      </div>
+    );
+  };
+  const renderHeader = () => {
+    const titleEl = (
+      <div>
+        根据规则显示导航，
+        <Button style={{ paddingLeft: 0 }} type="link">
+          查看当前规则
+        </Button>
+      </div>
+    );
+    return (
+      <div className="header flex items-center gap-x-4">
+        <Tooltip title={titleEl}>
+          <Switch />
+        </Tooltip>
+        <div className="flex gap-x-4 items-center ">
           <Popover
             content={
               <NavForm
@@ -139,8 +163,13 @@ const Home: NextPage<Props> = (props) => {
             trigger="click"
             overlayInnerStyle={{ width: 460 }}
           >
-            <Button type="primary" shape="round">
-              Upload Link
+            <Button
+              type="link"
+              shape="round"
+              style={{ padding: 0, display: "flex", alignItems: "center" }}
+            >
+              上传网址
+              <CloudUploadOutlined />
             </Button>
           </Popover>
         </div>
@@ -180,15 +209,27 @@ const Home: NextPage<Props> = (props) => {
   }, []);
 
   return (
-    <>
-      <Spin spinning={loading}>
-        <div className={styles.container}>
-          {renderHeader()}
-          {renderNavs()}
-        </div>
-      </Spin>
+    <Layout style={{ height: "100vh" }}>
+      <Header
+        style={{
+          backgroundColor: "#fff",
+          textAlign: "right",
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        {renderHeader()}
+      </Header>
+      <Content style={{ backgroundColor: "#efefef", height: "100%" }}>
+        <Spin spinning={loading}>
+          <div className={styles.container}>
+            {renderSearch()}
+            {renderNavs()}
+          </div>
+        </Spin>
+      </Content>
       {renderEditModal()}
-    </>
+    </Layout>
   );
 };
 
