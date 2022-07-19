@@ -19,6 +19,7 @@ import {
 } from "antd";
 import { CloudUploadOutlined } from "@ant-design/icons";
 import { useEffect, useMemo, useState } from "react";
+import RuleDrawer from "@/components/RuleDrawer";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -38,6 +39,8 @@ const Home: NextPage<Props> = (props) => {
   const [data, setData] = useState<NavItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const [showRule, setShowRule] = useState<boolean>(false);
+  const [ruleForm] = Form.useForm();
 
   const reqNavs = async (searchKey?: string) => {
     const res = await fetch(`/api/navs?searchKey=${searchKey || ""}`).then(
@@ -129,7 +132,7 @@ const Home: NextPage<Props> = (props) => {
           <Input
             size="large"
             style={{ borderRadius: "50px" }}
-            placeholder="搜索"
+            placeholder="搜索，支持网址、标签的模糊搜索"
             onKeyUp={handleSearch}
           />
         </div>
@@ -140,7 +143,13 @@ const Home: NextPage<Props> = (props) => {
     const titleEl = (
       <div>
         根据规则显示导航，
-        <Button style={{ paddingLeft: 0 }} type="link">
+        <Button
+          style={{ paddingLeft: 0 }}
+          type="link"
+          onClick={() => {
+            setShowRule(true);
+          }}
+        >
           查看当前规则
         </Button>
       </div>
@@ -203,6 +212,9 @@ const Home: NextPage<Props> = (props) => {
       </Modal>
     );
   };
+  const renderRuleDrawer = () => {
+    return <RuleDrawer visible={showRule} form={ruleForm} />;
+  };
   useEffect(() => {
     setLoading(true);
     reqNavs();
@@ -229,6 +241,7 @@ const Home: NextPage<Props> = (props) => {
         </Spin>
       </Content>
       {renderEditModal()}
+      {renderRuleDrawer()}
     </Layout>
   );
 };

@@ -21,3 +21,11 @@ model navs {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model rule {
+  id        Int      @id @default(autoincrement())
+  days      Json
+  start_time Int
+  end_time Int
+  navs      Json
+}
