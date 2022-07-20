@@ -88,27 +88,28 @@ const postNav = async (req: NextApiRequest) => {
 const getNav = async (req: NextApiRequest) => {
   const params = req.query;
   console.log(params, "params");
+  const searchKey = params?.searchKey || "";
   const navs = await prisma.navs.findMany({
     where: {
       OR: [
         {
           url: {
-            contains: params?.searchKey as string,
+            contains: searchKey as string,
           },
         },
         {
           title: {
-            contains: params?.searchKey as string,
+            contains: searchKey as string,
           },
         },
         {
           description: {
-            contains: params?.searchKey as string,
+            contains: searchKey as string,
           },
         },
         {
           tags: {
-            contains: params?.searchKey as string,
+            contains: searchKey as string,
           },
         },
       ],

@@ -213,7 +213,18 @@ const Home: NextPage<Props> = (props) => {
     );
   };
   const renderRuleDrawer = () => {
-    return <RuleDrawer visible={showRule} form={ruleForm} />;
+    return (
+      <RuleDrawer
+        visible={showRule}
+        form={ruleForm}
+        onOk={() => {
+          setShowRule(false);
+        }}
+        onCancel={() => {
+          setShowRule(false);
+        }}
+      />
+    );
   };
   useEffect(() => {
     setLoading(true);

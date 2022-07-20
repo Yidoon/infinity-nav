@@ -1,5 +1,7 @@
 import React from "react";
-import { Form, TimePicker, Checkbox, FormInstance, Input } from "antd";
+import { Form, TimePicker, Checkbox, FormInstance, Input, Button } from "antd";
+import RuleTime from "@/components/RuleTime";
+import NavPick from "@/components/NavPick";
 
 const FORM_LAYOUT = {
   labelCol: {
@@ -18,10 +20,10 @@ const RueForm = (props: IProps) => {
         <Checkbox.Group options={weekOptions} />
       </Form.Item>
       <Form.Item name="times" label="时间">
-        <TimePicker />
+        <RuleTime />
       </Form.Item>
       <Form.Item label="展示的导航" name="navs">
-        <Input />
+        <NavPick />
       </Form.Item>
     </Form>
   );
