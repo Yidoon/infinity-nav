@@ -8,18 +8,8 @@ interface IProps {
   onOk: () => void;
   onCancel: () => void;
 }
-const RuleDrawer = (props: IProps) => {
+const RuleModal = (props: IProps) => {
   const { visible, form, onOk, onCancel } = props;
-  const Footer = (
-    <div className="text-right">
-      <Space size={8}>
-        <Button onClick={onCancel}>取消</Button>
-        <Button type="primary" onClick={onOk}>
-          确定
-        </Button>
-      </Space>
-    </div>
-  );
   return (
     <Modal
       width={820}
@@ -27,7 +17,6 @@ const RuleDrawer = (props: IProps) => {
       title="规则"
       okText="确定"
       cancelText="取消"
-      // footer={Footer}
       onCancel={onCancel}
       onOk={onOk}
     >
@@ -36,4 +25,4 @@ const RuleDrawer = (props: IProps) => {
   );
 };
 
-export default RuleDrawer;
+export default RuleModal;

@@ -15,7 +15,10 @@ const NavPick = (props: IProps) => {
   const onCancel = () => {
     setVisible(false);
   };
-  const onOk = () => {};
+  const onOk = () => {
+    onChange?.(selectedRowKeys);
+    setVisible(false);
+  };
   const reqNavs = async () => {
     const res = await fetch(`/api/navs`).then((res) => res.json());
     setNavList(res.data);
@@ -107,12 +110,16 @@ const NavPick = (props: IProps) => {
       <Button
         icon={<SelectOutlined />}
         size="middle"
+        type="link"
         style={{ display: "flex", alignItems: "center" }}
         onClick={() => {
           setVisible(true);
         }}
       >
         选择导航
+        {selectedRowKeys.length > 0 && (
+          <span className="ml-1">(已选{selectedRowKeys.length})</span>
+        )}
       </Button>
       {renderNavPickDrawer()}
     </>

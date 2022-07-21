@@ -19,7 +19,7 @@ import {
 } from "antd";
 import { CloudUploadOutlined } from "@ant-design/icons";
 import { useEffect, useMemo, useState } from "react";
-import RuleDrawer from "@/components/RuleDrawer";
+import RuleModal from "@/components/RuleModal";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -52,7 +52,6 @@ const Home: NextPage<Props> = (props) => {
   const [uploadForm] = Form.useForm();
 
   const handleEdit = (item: NavItem) => {
-    console.log(item, "item");
     uploadForm.setFieldsValue({
       ...item,
     });
@@ -212,14 +211,32 @@ const Home: NextPage<Props> = (props) => {
       </Modal>
     );
   };
-  const renderRuleDrawer = () => {
+  const handleRuleOk = async () => {
+    const values = ruleForm.getFieldsValue();
+    const params = {
+      days: values.days,
+      start_time: values?.times?.[0] || 0,
+      end_time: values?.times?.[1] || 0,
+      navs: values.navs,
+    };
+    const res = await fetch("/api/rules", {
+      method: "POST",
+      body: JSON.stringify(params),
+    }).then((res) => res.json());
+    if (res.code === 0) {
+      ruleForm.resetFields();
+      setShowRule(false);
+      message.success("Success");
+    } else {
+      message.error(res.msg);
+    }
+  };
+  const renderRuleModal = () => {
     return (
-      <RuleDrawer
+      <RuleModal
         visible={showRule}
         form={ruleForm}
-        onOk={() => {
-          setShowRule(false);
-        }}
+        onOk={handleRuleOk}
         onCancel={() => {
           setShowRule(false);
         }}
@@ -252,7 +269,7 @@ const Home: NextPage<Props> = (props) => {
         </Spin>
       </Content>
       {renderEditModal()}
-      {renderRuleDrawer()}
+      {renderRuleModal()}
     </Layout>
   );
 };
