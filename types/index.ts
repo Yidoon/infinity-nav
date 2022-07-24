@@ -7,3 +7,12 @@ export interface NavItem {
   icon?: string;
   remark?: string;
 }
+
+export interface RuleItem {
+  name: string;
+  days: string[];
+  start_time: number;
+  end_time: number;
+  navs: number[];
+  id?: number
+}

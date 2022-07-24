@@ -20,6 +20,7 @@ import {
 import { CloudUploadOutlined } from "@ant-design/icons";
 import { useEffect, useMemo, useState } from "react";
 import RuleModal from "@/components/RuleModal";
+import RuleSwitch from "@/components/RuleSwitch";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -139,25 +140,10 @@ const Home: NextPage<Props> = (props) => {
     );
   };
   const renderHeader = () => {
-    const titleEl = (
-      <div>
-        根据规则显示导航，
-        <Button
-          style={{ paddingLeft: 0 }}
-          type="link"
-          onClick={() => {
-            setShowRule(true);
-          }}
-        >
-          查看当前规则
-        </Button>
-      </div>
-    );
     return (
       <div className="header flex items-center gap-x-4">
-        <Tooltip title={titleEl}>
-          <Switch />
-        </Tooltip>
+        <RuleSwitch />
+
         <div className="flex gap-x-4 items-center ">
           <Popover
             content={
@@ -211,38 +197,6 @@ const Home: NextPage<Props> = (props) => {
       </Modal>
     );
   };
-  const handleRuleOk = async () => {
-    const values = ruleForm.getFieldsValue();
-    const params = {
-      days: values.days,
-      start_time: values?.times?.[0] || 0,
-      end_time: values?.times?.[1] || 0,
-      navs: values.navs,
-    };
-    const res = await fetch("/api/rules", {
-      method: "POST",
-      body: JSON.stringify(params),
-    }).then((res) => res.json());
-    if (res.code === 0) {
-      ruleForm.resetFields();
-      setShowRule(false);
-      message.success("Success");
-    } else {
-      message.error(res.msg);
-    }
-  };
-  const renderRuleModal = () => {
-    return (
-      <RuleModal
-        visible={showRule}
-        form={ruleForm}
-        onOk={handleRuleOk}
-        onCancel={() => {
-          setShowRule(false);
-        }}
-      />
-    );
-  };
   useEffect(() => {
     setLoading(true);
     reqNavs();
@@ -269,7 +223,6 @@ const Home: NextPage<Props> = (props) => {
         </Spin>
       </Content>
       {renderEditModal()}
-      {renderRuleModal()}
     </Layout>
   );
 };

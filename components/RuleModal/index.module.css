@@ -1,0 +1,10 @@
+.ruleTitleEdit {
+  color: #d1d5db;
+  cursor: pointer;
+}
+.ruleTitleEdit:hover {
+  color: #93c5fd;
+}
+.ruleTitleEdit:active {
+  color: #2563eb;
+}

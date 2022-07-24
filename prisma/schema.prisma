@@ -24,6 +24,7 @@ model navs {
 
 model rule {
   id        Int      @id @default(autoincrement())
+  name String? 
   days      Json
   start_time Int
   end_time Int
