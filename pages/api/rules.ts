@@ -20,16 +20,24 @@ const createRule = (rule: RuleItem) => {
 
 const handleRules = async (req: NextApiRequest) => {
   const params = JSON.parse(req.body);
-  console.log(params, "ppppp");
   const { rules } = params;
   for (let i = 0, len = rules.length; i < len; i++) {
+    let data: any = {
+      name: rules[i].name,
+      days: rules[i].days,
+      start_time: rules[i].start_time,
+      end_time: rules[i].end_time,
+      navs: rules[i].navs,
+    };
     if (rules[i].id) {
       try {
         if (!rules[i].name) {
           rules[i].name = `规则${i + 1}`;
         }
-        await updateRule(rules[i]);
+        data.id = rules[i].id;
+        await updateRule(data);
       } catch (error) {
+        console.log(error, "error");
         return { code: 10002, data: "", msg: "Server error" };
       }
     } else {
@@ -37,7 +45,7 @@ const handleRules = async (req: NextApiRequest) => {
         if (!rules[i].name) {
           rules[i].name = `规则${i + 1}`;
         }
-        await createRule(rules[i]);
+        await createRule(data);
       } catch (error) {
         return { code: 10003, data: "", msg: "Server error" };
       }

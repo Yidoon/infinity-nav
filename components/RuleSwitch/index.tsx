@@ -2,6 +2,7 @@ import { RuleItem } from "@/types/index";
 import { Button, Form, message, Switch } from "antd";
 import React, { useEffect, useState } from "react";
 import RuleModal from "../RuleModal";
+import dayjs from "dayjs";
 
 const RuleSwitch = () => {
   const [ruleList, setRuleList] = useState<RuleItem[]>([]);
@@ -14,16 +15,16 @@ const RuleSwitch = () => {
   };
   const handleRuleOk = async () => {
     const values = ruleForm.getFieldsValue();
-    console.log(values, "vvv");
-    const params = {
-      days: values.days,
-      start_time: values?.times?.[0] || 0,
-      end_time: values?.times?.[1] || 0,
-      navs: values.navs,
-    };
+    const rules = values.rules.map((item: any) => {
+      return {
+        ...item,
+        start_time: item.times[0].unix(),
+        end_time: item.times[1].unix(),
+      };
+    });
     const res = await fetch("/api/rules", {
       method: "POST",
-      body: JSON.stringify(values),
+      body: JSON.stringify({ rules }),
     }).then((res) => res.json());
     if (res.code === 0) {
       ruleForm.resetFields();
