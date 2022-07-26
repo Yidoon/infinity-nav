@@ -40,6 +40,29 @@ const RuleModal = (props: IProps) => {
   const [titleEditIndex, setTitleEditIndex] = useState<number | undefined>(
     undefined
   );
+  const renderRuleTips = (index: number) => {
+    const rules = form.getFieldsValue().rules;
+    const target = rules[index];
+    const daysText = (
+      <span style={{ color: "#3b82f6" }}>{target.days.join("、")}</span>
+    );
+    const timeText = (
+      <span style={{ color: "#3b82f6" }} className="mx-2">
+        {target.times[0].format("HH:mm:ss")} -
+        {target.times[1].format("HH:mm:ss")}
+      </span>
+    );
+    const navsText = (
+      <span className="mx-2" style={{ color: "#3b82f6" }}>
+        {target.navs.length}
+      </span>
+    );
+    return (
+      <>
+        在 {daysText}, {timeText}的时候，会展示以下 {navsText}个导航
+      </>
+    );
+  };
   useEffect(() => {
     const _rules = value.map((item) => {
       return {
@@ -160,6 +183,7 @@ const RuleModal = (props: IProps) => {
                         <Form.Item name={[name, "id"]} hidden noStyle>
                           <Input />
                         </Form.Item>
+                        <div>{renderRuleTips(key)}</div>
                       </Card>
                     );
                   })}

@@ -105,6 +105,10 @@ const NavPick = (props: IProps) => {
       reqNavs();
     }
   }, [visible]);
+  useEffect(() => {
+    setSelectedRowKeys(value);
+  }, [value]);
+
   return (
     <>
       <Button
