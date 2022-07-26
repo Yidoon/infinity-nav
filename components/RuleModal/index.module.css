@@ -8,3 +8,14 @@
 .ruleTitleEdit:active {
   color: #2563eb;
 }
+.cardDelete {
+  font-size: 22px;
+  color: #d1d5db;
+  cursor: pointer;
+}
+.cardDelete:hover {
+  color: #93c5fd;
+}
+.cardDelete:active {
+  color: #2563eb;
+}

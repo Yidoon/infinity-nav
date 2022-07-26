@@ -10,7 +10,6 @@ const RuleSwitch = () => {
   const [ruleForm] = Form.useForm();
   const reqRules = async () => {
     const res = await fetch("/api/rules").then((res) => res.json());
-    console.log(res, "rrrr");
     setRuleList(res.data);
   };
   const handleRuleOk = async () => {

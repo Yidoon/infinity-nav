@@ -17,10 +17,29 @@ const createRule = (rule: RuleItem) => {
     data: rule,
   });
 };
-
+const getRule = () => {
+  return prisma.rule.findMany();
+};
+const isRemoveRule = async (req: NextApiRequest) => {
+  const params = JSON.parse(req.body);
+  const { rules } = params;
+  const data = await getRule();
+  if (rules.length < data.length) {
+    for (let i = 0, len = data.length; i < len; i++) {
+      if (!rules.find((rule: RuleItem) => rule.id === data[i].id)) {
+        await prisma.rule.delete({
+          where: {
+            id: data[i].id,
+          },
+        });
+      }
+    }
+  }
+};
 const handleRules = async (req: NextApiRequest) => {
   const params = JSON.parse(req.body);
   const { rules } = params;
+  await isRemoveRule(req);
   for (let i = 0, len = rules.length; i < len; i++) {
     let data: any = {
       name: rules[i].name,

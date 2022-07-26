@@ -9,13 +9,12 @@ import {
   Input,
   Modal,
   Space,
+  Switch,
   TimePicker,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import NavPick from "../NavPick";
-import RuleForm from "../RuleForm";
-import RuleTime from "../RuleTime";
-import { EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { EditOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import styles from "./index.module.css";
 import produce from "immer";
 import moment from "moment";
@@ -25,8 +24,7 @@ const weekOptions = ["周一", "周二", "周三", "周四", "周五", "周六",
 const TEMP_RULE = {
   name: "",
   days: [],
-  start_time: 0,
-  end_time: 0,
+  times: [],
   navs: [],
 };
 interface IProps {
@@ -125,8 +123,29 @@ const RuleModal = (props: IProps) => {
                       </div>
                     );
                     const TitleEl = titleEditIndex === key ? InputEl : TextEl;
+                    const OperationEl = (
+                      <div className="flex items-center gap-x-2">
+                        <Switch />
+                        <DeleteOutlined
+                          className={styles.cardDelete}
+                          onClick={() => {
+                            remove(name);
+                          }}
+                        />
+                      </div>
+                    );
+                    const CardTitle = (
+                      <div className="flex items-center justify-between">
+                        <div>{TitleEl}</div>
+                        <div>{OperationEl}</div>
+                      </div>
+                    );
                     return (
-                      <Card title={TitleEl} key={key} style={{ marginTop: 24 }}>
+                      <Card
+                        title={CardTitle}
+                        key={key}
+                        style={{ marginTop: 24 }}
+                      >
                         <Form.Item name={[name, "days"]} label="周期">
                           <Checkbox.Group options={weekOptions} />
                         </Form.Item>
@@ -154,11 +173,7 @@ const RuleModal = (props: IProps) => {
                       justifyContent: "center",
                     }}
                     onClick={() => {
-                      form.setFieldsValue({
-                        rules: produce(ruleList, (draft) => {
-                          draft.push(TEMP_RULE);
-                        }),
-                      });
+                      add(TEMP_RULE);
                     }}
                     block
                     icon={<PlusOutlined />}
