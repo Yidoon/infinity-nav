@@ -36,7 +36,6 @@ interface IProps {
 }
 const RuleModal = (props: IProps) => {
   const { visible, form, onOk, onCancel, value } = props;
-  const [ruleList, setRuleList] = useState<RuleItem[]>([]);
   const [titleEditIndex, setTitleEditIndex] = useState<number | undefined>(
     undefined
   );
@@ -83,6 +82,7 @@ const RuleModal = (props: IProps) => {
       <Form form={form} name="dynamic_rules">
         <Form.List name="rules">
           {(fields, { add, remove }) => {
+            console.log(fields, "fields");
             return (
               <>
                 <div

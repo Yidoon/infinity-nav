@@ -13,25 +13,17 @@ import {
   Modal,
   Popover,
   Spin,
-  Switch,
   Layout,
-  Tooltip,
 } from "antd";
 import { CloudUploadOutlined } from "@ant-design/icons";
 import { useEffect, useMemo, useState } from "react";
 import RuleModal from "@/components/RuleModal";
 import RuleSwitch from "@/components/RuleSwitch";
+import SiderMenu from "@/components/Sider";
+import HeaderContent from "@/components/Header"
 
 const { Header, Footer, Sider, Content } = Layout;
 
-const FORM_LAYOUT = {
-  labelCol: {
-    span: 5,
-  },
-};
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
 interface Props {
   navs: NavItem[];
 }
@@ -204,24 +196,34 @@ const Home: NextPage<Props> = (props) => {
 
   return (
     <Layout style={{ height: "100vh" }}>
-      <Header
-        style={{
-          backgroundColor: "#fff",
-          textAlign: "right",
-          display: "flex",
-          justifyContent: "flex-end",
-        }}
+      <Sider
+        width={240}
+        theme="light"
+        style={{ borderRight: "1px solid rgba(0,0,0,0.08)" }}
       >
-        {renderHeader()}
-      </Header>
-      <Content style={{ backgroundColor: "#efefef", height: "100%" }}>
-        <Spin spinning={loading}>
-          <div className={styles.container}>
-            {renderSearch()}
-            {renderNavs()}
-          </div>
-        </Spin>
-      </Content>
+        <SiderMenu />
+      </Sider>
+      <Layout>
+        <Header
+          style={{
+            backgroundColor: "#fff",
+            textAlign: "right",
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <HeaderContent />
+          {/*{renderHeader()}*/}
+        </Header>
+        <Content style={{ backgroundColor: "#efefef", height: "100%" }}>
+          <Spin spinning={loading}>
+            <div className={styles.container}>
+              {renderSearch()}
+              {renderNavs()}
+            </div>
+          </Spin>
+        </Content>
+      </Layout>
       {renderEditModal()}
     </Layout>
   );
