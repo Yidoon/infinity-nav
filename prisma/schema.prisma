@@ -10,6 +10,7 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
 model navs {
   id        Int      @id @default(autoincrement())
   url     String   @db.VarChar(255)
@@ -29,4 +30,11 @@ model rule {
   start_time Int
   end_time Int
   navs      Json
+}
+
+model category {
+  id Int      @id @default(autoincrement())
+  name String
+  parent_id Int?
+  level Int?
 }

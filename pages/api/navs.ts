@@ -87,7 +87,6 @@ const postNav = async (req: NextApiRequest) => {
 };
 const getNav = async (req: NextApiRequest) => {
   const params = req.query;
-  console.log(params, "params");
   const searchKey = params?.searchKey || "";
   const navs = await prisma.navs.findMany({
     where: {
