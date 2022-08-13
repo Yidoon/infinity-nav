@@ -79,6 +79,7 @@ const postNav = async (req: NextApiRequest) => {
     tags: params.tags || "",
     icon: basicInfo.icon,
     remark: params.remark || "",
+    category: params.category || "",
   };
   await prisma.navs.create({
     data: payload,

@@ -14,5 +14,13 @@ export interface RuleItem {
   start_time: number;
   end_time: number;
   navs: number[];
-  id?: number
+  id?: number;
+}
+
+export interface MenuItem {
+  id: number;
+  name: string;
+  level: number;
+  parent_id: number | undefined | null;
+  children: MenuItem[];
 }

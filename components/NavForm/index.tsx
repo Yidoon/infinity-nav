@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Form, FormInstance, Input, Space } from "antd";
+import MenuSelect from "../MeunSelect";
 
 const FORM_LAYOUT = {
   labelCol: {
@@ -25,6 +26,9 @@ const NavForm = (props: IProps) => {
       </Form.Item>
       <Form.Item label="Url" name="url">
         <Input placeholder="Website link" disabled={isEdit} />
+      </Form.Item>
+      <Form.Item label="分类" name="category">
+        <MenuSelect />
       </Form.Item>
       <Form.Item label="Tag" name="tags">
         <Input placeholder="Tags" />

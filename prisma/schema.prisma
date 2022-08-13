@@ -21,6 +21,7 @@ model navs {
   remark String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  category Json?
 }
 
 model rule {
