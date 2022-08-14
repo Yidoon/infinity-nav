@@ -1,25 +1,33 @@
-import React, { memo, useEffect, useMemo, useState } from "react";
+import React, { memo, useContext, useEffect, useMemo, useState } from "react";
 import styles from "./index.module.scss";
 import { Menu } from "antd";
 import { MenuItem } from "@/types/index";
 import { HomeOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
+import { observer } from "mobx-react-lite";
+import GlobalContext from "@/store/global";
 
 const { Item, SubMenu } = Menu;
 
 const Sider = () => {
   const router = useRouter();
   const [menus, setMenus] = useState<MenuItem[]>([]);
-  const [activeId, setActiveId] = useState<number>(-1);
+  const globalState = useContext(GlobalContext);
+  const { menuId } = globalState;
   const getCategory = async () => {
     const res = await fetch(`/api/category`).then((res) => res.json());
     setMenus(res.data);
   };
   const handleMenuClick = (id: number) => {
-    console.log(id, "id");
-    setActiveId(id);
+    globalState.menuId = id;
     router.push(`/category/${id}`);
   };
+  const initMenu = () => {
+    const { id } = router.query;
+    globalState.menuId = id as string;
+  };
+  initMenu();
+
   const renderMenuItem = (item: MenuItem) => {
     return (
       <div
@@ -45,29 +53,33 @@ const Sider = () => {
       return <Item key={item.id}>{renderMenuItem(item)}</Item>;
     });
   };
+  const isHomePath = useMemo(() => {
+    return router.pathname === "/";
+  }, [router]);
   useEffect(() => {
     getCategory();
   }, []);
+  console.log([String(menuId)], "[String(menuId)]");
   return (
     <div className={styles.siderWrap}>
       <div
         className={`${styles.siderHome} h-10 flex items-center cursor-pointer pl-6 gap-x-2`}
         style={{
-          backgroundColor: activeId === -1 ? "#e6f7ff" : "#fff",
-          color: activeId === -1 ? "#1890ff" : "#000",
+          backgroundColor: isHomePath ? "#e6f7ff" : "#fff",
+          color: isHomePath ? "#1890ff" : "#000",
         }}
         onClick={() => {
-          setActiveId(-1);
+          globalState.menuId = undefined;
           router.push(`/`);
         }}
       >
         <HomeOutlined />
         <span className="align-center">首页</span>
       </div>
-      <Menu selectedKeys={[String(activeId)]} mode="inline">
+      <Menu selectedKeys={[String(menuId)]} mode="inline">
         {loopMenus(menus)}
       </Menu>
     </div>
   );
 };
-export default memo(Sider);
+export default observer(Sider);

@@ -1,24 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { NavItem } from "@/types/index";
 import NavCard from "@/components/NavCard";
 import { Form, message, Modal, Spin } from "antd";
 import NavForm from "@/components/NavForm";
+import { autorun } from "mobx";
+import GlobalContext from "@/store/global";
 
 const Navs = () => {
   const [data, setData] = useState<NavItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
 
+  const globalState = useContext(GlobalContext);
+  const { menuId } = globalState;
+
   const routerObj = useRouter();
   const [uploadForm] = Form.useForm();
   const { id } = routerObj.query;
-  console.log(id, "id");
 
   const reqNavs = async (searchKey?: string) => {
-    const res = await fetch(`/api/navs?searchKey=${searchKey || ""}`).then(
-      (res) => res.json()
-    );
+    const res = await fetch(
+      `/api/navs?searchKey=${searchKey || ""}&category=${menuId || ""}`
+    ).then((res) => res.json());
     setData(res.data);
     setLoading(false);
   };
@@ -115,7 +119,7 @@ const Navs = () => {
   };
   useEffect(() => {
     reqNavs();
-  }, []);
+  }, [menuId]);
   return (
     <Spin spinning={loading}>
       {renderNavs()}

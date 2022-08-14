@@ -4,34 +4,37 @@ import "antd/dist/antd.css";
 import { Layout } from "antd";
 import SiderMenu from "@/components/Sider";
 import HeaderContent from "@/components/Header";
+import GlobalContext, { state as globalState } from "@/store/global";
 
 const { Header, Sider, Content } = Layout;
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
-      <Sider
-        width={240}
-        theme="light"
-        style={{ borderRight: "1px solid rgba(0,0,0,0.08)" }}
-      >
-        <SiderMenu />
-      </Sider>
+    <GlobalContext.Provider value={globalState}>
       <Layout>
-        <Header
-          style={{
-            backgroundColor: "#fff",
-            textAlign: "right",
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
+        <Sider
+          width={240}
+          theme="light"
+          style={{ borderRight: "1px solid rgba(0,0,0,0.08)" }}
         >
-          <HeaderContent />
-        </Header>
-        <Content>
-          <Component {...pageProps} />
-        </Content>
+          <SiderMenu />
+        </Sider>
+        <Layout>
+          <Header
+            style={{
+              backgroundColor: "#fff",
+              textAlign: "right",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <HeaderContent />
+          </Header>
+          <Content>
+            <Component {...pageProps} />
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </GlobalContext.Provider>
   );
 }
 

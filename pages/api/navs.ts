@@ -20,7 +20,6 @@ type Data = {
 
 const getWebsiteInfo = (url: string): Promise<Partial<Data>> => {
   const _http = url.indexOf("https") > -1 ? https : http;
-  console.log(url, "url");
 
   return new Promise((resolve, reject) => {
     _http.get(url, (res) => {
@@ -52,6 +51,7 @@ const putNav = async (req: NextApiRequest) => {
   const payload = {
     tags: params.tags || "",
     remark: params.remark || "",
+    category: params.category || "",
   };
   await prisma.navs.update({
     where: {
@@ -89,7 +89,7 @@ const postNav = async (req: NextApiRequest) => {
 const getNav = async (req: NextApiRequest) => {
   const params = req.query;
   const searchKey = params?.searchKey || "";
-  const navs = await prisma.navs.findMany({
+  let data = await prisma.navs.findMany({
     where: {
       OR: [
         {
@@ -115,7 +115,15 @@ const getNav = async (req: NextApiRequest) => {
       ],
     },
   });
-  return { msg: "", code: 0, data: navs };
+
+  if (params?.category) {
+    data = data.filter((item) => {
+      const categoryArr = item.category ? (item.category as any).flat() : [];
+
+      return categoryArr.includes(Number(params?.category));
+    });
+  }
+  return { msg: "", code: 0, data: data };
 };
 const deleteNav = async (req: NextApiRequest) => {
   const params = req.body;
