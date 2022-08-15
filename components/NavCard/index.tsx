@@ -23,7 +23,7 @@ export default function NavCard(props: IProps) {
   }, [tags]);
 
   const _classNames = classnames(
-    "cursor-pointer flex flex-col justify-between p-2 rounded-md inline-block",
+    "flex flex-col justify-between p-2",
     styles.navCard
   );
   const handleClick = () => {
@@ -41,23 +41,39 @@ export default function NavCard(props: IProps) {
   };
   return (
     <div className={_classNames} onClick={handleClick}>
-      <div className="flex gap-x-2 items-center">
-        <img src={icon} className="h-5 w-5" alt="" />
-        <div className={classnames("text-xl", styles.titleText)}>{title}</div>
-      </div>
       <div
         className={classnames(
-          "text-sm text-slate-500 mt-2 ml-1",
-          styles.max3RowText
+          "cursor-pointer rounded-md",
+          styles.navCardContent
         )}
-        title={description}
       >
-        {description}
-      </div>
-      <div className="text-xs text-slate-400 mt-1">{_tags}</div>
-      <div className={`${styles.editArea} rounded-md flex flex-col gap-y-2`}>
-        <EditOutlined className={styles.handleIcon} onClick={_handleEdit} />
-        <DeleteOutlined className={styles.handleIcon} onClick={_handleDelete} />
+        <div
+          className={classnames("flex gap-x-2 items-center", styles.navTitle)}
+        >
+          <img src={icon} className="h-5 w-5" alt="" />
+          <div className={classnames("text-xl", styles.titleText)}>{title}</div>
+        </div>
+
+        <div
+          className={classnames(
+            "text-sm text-slate-500 mt-2 ml-1",
+            styles.max3RowText,
+            styles.navDesc
+          )}
+          title={description}
+        >
+          {description}
+        </div>
+
+        <div className={classnames("text-xs text-slate-400 mt-1", styles.navTag)}>{_tags}</div>
+
+        <div className={`${styles.editArea} rounded-md flex flex-col gap-y-2`}>
+          <EditOutlined className={styles.handleIcon} onClick={_handleEdit} />
+          <DeleteOutlined
+            className={styles.handleIcon}
+            onClick={_handleDelete}
+          />
+        </div>
       </div>
     </div>
   );

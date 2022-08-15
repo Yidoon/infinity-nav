@@ -115,7 +115,7 @@ const Navs = () => {
     );
   });
   const renderNavs = () => {
-    return <div className="flex mt-16 gap-x-4 flex-wrap gap-y-4">{els}</div>;
+    return <div className="flex flex-wrap">{els}</div>;
   };
   useEffect(() => {
     reqNavs();

@@ -1,10 +1,26 @@
 .navCard {
   width: 240px;
   /* background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); */
-  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
   /* background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%); */
   /* background-image: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%); */
   position: relative;
+  flex-basis: 25%;
+  -webkit-box-flex: 0;
+  flex-grow: 0;
+  max-width: 25%;
+  padding-left: 24px;
+  padding-top: 24px;
+}
+.navCardContent {
+  /* background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%); */
+  padding: 16px;
+  position: relative;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  background-image: none;
+  overflow: hidden;
+  box-shadow: rgb(145 158 171 / 24%) 0px 0px 2px 0px,
+    rgb(145 158 171 / 24%) 0px 16px 32px -4px;
+  border-radius: 16px;
 }
 .navCardDes {
   overflow: hidden;
@@ -27,6 +43,16 @@
   word-wrap: break-word;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+}
+.navTitle {
+  height: 30px;
+  width: 100%;
+}
+.navDesc {
+  height: 60px;
+}
+.navTag {
+  height: 30px;
 }
 .editArea {
   position: absolute;

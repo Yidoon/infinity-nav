@@ -18,3 +18,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.ant-layout {
+  background: #fff !important;
+}
