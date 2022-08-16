@@ -4,8 +4,9 @@ import { NavItem } from "@/types/index";
 import NavCard from "@/components/NavCard";
 import { Form, message, Modal, Spin } from "antd";
 import NavForm from "@/components/NavForm";
-import { autorun } from "mobx";
 import GlobalContext from "@/store/global";
+import styles from "./index.module.scss";
+import classnames from "classnames";
 
 const Navs = () => {
   const [data, setData] = useState<NavItem[]>([]);
@@ -115,15 +116,19 @@ const Navs = () => {
     );
   });
   const renderNavs = () => {
-    return <div className="flex flex-wrap">{els}</div>;
+    return (
+      <div className={classnames("flex flex-wrap", styles.navWrap)}>{els}</div>
+    );
   };
   useEffect(() => {
     reqNavs();
   }, [menuId]);
   return (
     <Spin spinning={loading}>
-      {renderNavs()}
-      {renderEditModal()}
+      <div className={styles.contentWrap}>
+        {renderNavs()}
+        {renderEditModal()}
+      </div>
     </Spin>
   );
 };
