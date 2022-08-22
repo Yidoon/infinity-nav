@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { Cascader } from "antd";
-import { MenuItem } from "@/types/index";
+import React, { useEffect, useState } from 'react'
+import { Cascader } from 'antd'
+import { CategroyItem } from '@/types/index'
 
 interface Option {
-  value: string | number;
-  label: string;
-  children?: Option[];
+  value: string | number
+  label: string
+  children?: Option[]
 }
 interface Props {
-  value?: any;
-  onChange?: (value: any) => void;
+  value?: any
+  onChange?: (value: any) => void
 }
 const MenuSelect = (props: Props) => {
-  const { value, onChange } = props;
-  const [menus, setMenus] = useState<MenuItem[]>([]);
+  const { value, onChange } = props
+  const [menus, setMenus] = useState<CategroyItem[]>([])
   const getCategory = async () => {
-    const res = await fetch(`/api/category`).then((res) => res.json());
-    setMenus(res.data);
-  };
+    const res = await fetch(`/api/category`).then((res) => res.json())
+    setMenus(res.data)
+  }
   useEffect(() => {
-    getCategory();
-  }, []);
+    getCategory()
+  }, [])
   return (
     <div>
       <Cascader
-        style={{ width: "100%" }}
+        style={{ width: '100%' }}
         options={menus}
         onChange={onChange}
         multiple
         value={value}
         maxTagCount="responsive"
-        fieldNames={{ label: "name", value: "id", children: "children" }}
+        fieldNames={{ label: 'name', value: 'id', children: 'children' }}
       />
     </div>
-  );
-};
+  )
+}
 
-export default MenuSelect;
+export default MenuSelect

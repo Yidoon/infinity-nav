@@ -1,6 +1,6 @@
 .siderWrap {
-  height: 100vh;
-  padding-top: 40px;
+  flex: 1;
+  overflow: auto;
   .siderHome {
     &:hover {
       background-color: rgba(0, 0, 0, 0.06);

@@ -1,0 +1,17 @@
+.treeNodeTitle {
+  width: calc(100% - 24px);
+  display: inline-block;
+  position: relative;
+  &:hover {
+    .treeNodeTitleAddWidget {
+      display: inline-block;
+    }
+  }
+  .treeNodeTitleAddWidget {
+    position: absolute;
+    right: 0px;
+    width: 20px;
+    cursor: pointer;
+    display: none;
+  }
+}
