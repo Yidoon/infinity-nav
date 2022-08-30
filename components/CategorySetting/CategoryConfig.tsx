@@ -31,13 +31,20 @@ const CategoryConfig = () => {
     }
   }, [isCreateCate])
 
-  const submitForm = () => {
+  const submitForm = async () => {
     const values = configForm.getFieldsValue()
     const payload = { ...values }
     if (selectedItem?.id && !isCreateCate) {
       payload.id = selectedItem.id
     }
-    console.log(payload)
+    const res = await fetch('/api/category', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    }).then((res) => res.json())
+    console.log(res)
   }
   const handleReset = () => {
     configForm.resetFields()
