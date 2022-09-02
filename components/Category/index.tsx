@@ -9,7 +9,7 @@ import GlobalContext from '@/store/global'
 
 const { Item, SubMenu } = Menu
 
-const Categroy = () => {
+const Category = () => {
   const router = useRouter()
   const [categroys, setCategroys] = useState<CategroyItem[]>([])
   const globalState = useContext(GlobalContext)
@@ -81,4 +81,4 @@ const Categroy = () => {
     </div>
   )
 }
-export default observer(Categroy)
+export default observer(Category)
