@@ -143,16 +143,8 @@ export default async function handler(
     const r = await postNav(req)
     res.status(200).send(r as any)
   }
-  if (req.method === 'PUT') {
-    const r = await putNav(req)
-    res.status(200).send(r as any)
-  }
   if (req.method === 'GET') {
     const r = await getNav(req)
-    res.status(200).send(r as any)
-  }
-  if (req.method === 'DELETE') {
-    const r = await deleteNav(req)
     res.status(200).send(r as any)
   }
 }

@@ -31,25 +31,6 @@ const postTags = async (req: NextApiRequest) => {
   })
   return { code: 0, data: '', msg: '' }
 }
-const putTags = async (req: NextApiRequest) => {
-  const params = req.body
-  await prisma.tag.update({
-    where: {
-      id: params.id,
-    },
-    data: params,
-  })
-}
-const deleteTag = async (req: NextApiRequest) => {
-  const { id } = req.query
-  if (!id) return { msg: '', code: 100045, data: '缺少参数' }
-  await prisma.tag.delete({
-    where: {
-      id: +id,
-    },
-  })
-  return { msg: '', code: 0, data: '' }
-}
 
 export default async function handler(
   req: NextApiRequest,
@@ -61,10 +42,6 @@ export default async function handler(
   }
   if (req.method === 'POST') {
     const r = await postTags(req)
-    res.status(200).send(r as any)
-  }
-  if (req.method === 'PUT') {
-    const r = await putTags(req)
     res.status(200).send(r as any)
   }
 }

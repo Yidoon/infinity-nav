@@ -127,10 +127,13 @@ const getNav = async (req: NextApiRequest) => {
   return { msg: '', code: 0, data: data }
 }
 const deleteNav = async (req: NextApiRequest) => {
-  const params = req.body
+  const { id } = req.query
+  if (!id) {
+    return { msg: '缺少参数', code: 100001, data: '' }
+  }
   await prisma.navs.delete({
     where: {
-      id: params.id,
+      id: +id,
     },
   })
   return { msg: '', code: 0, data: '' }
@@ -139,16 +142,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  if (req.method === 'POST') {
-    const r = await postNav(req)
-    res.status(200).send(r as any)
-  }
   if (req.method === 'PUT') {
     const r = await putNav(req)
-    res.status(200).send(r as any)
-  }
-  if (req.method === 'GET') {
-    const r = await getNav(req)
     res.status(200).send(r as any)
   }
   if (req.method === 'DELETE') {

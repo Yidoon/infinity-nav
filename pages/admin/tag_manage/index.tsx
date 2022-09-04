@@ -1,9 +1,11 @@
+import AdminLayout from '@/components/Layout/AdminLayout'
+import { NextPageWithLayout } from 'pages/_app'
 import { TagItem } from '@/types/index'
 import { Table, Button, Input, Popconfirm, Form, Space, message } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, ReactElement } from 'react'
 import classes from './index.module.scss'
 
-const TagList = () => {
+const TagManagePage: NextPageWithLayout = () => {
   const [tableLoading, setTableLoading] = useState<boolean>(true)
   const [tagList, setTagList] = useState<TagItem[]>([])
   const [tagForm] = Form.useForm()
@@ -94,7 +96,7 @@ const TagList = () => {
   }, [])
 
   return (
-    <div>
+    <div className={classes.tagManage}>
       <Space size={8} className={classes.tagHeader}>
         <Input.Search
           style={{ width: 240 }}
@@ -124,4 +126,8 @@ const TagList = () => {
   )
 }
 
-export default TagList
+export default TagManagePage
+
+TagManagePage.getLayout = (page: ReactElement) => {
+  return <AdminLayout>{page}</AdminLayout>
+}
