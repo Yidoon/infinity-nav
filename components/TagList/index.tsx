@@ -1,14 +1,31 @@
 import { TagItem } from '@/types/index'
-import { Table, Button, Input, Popconfirm, Form } from 'antd'
+import { Table, Button, Input, Popconfirm, Form, Space, message } from 'antd'
 import React, { useEffect, useState } from 'react'
+import classes from './index.module.scss'
 
 const TagList = () => {
+  const [tableLoading, setTableLoading] = useState<boolean>(true)
   const [tagList, setTagList] = useState<TagItem[]>([])
   const [tagForm] = Form.useForm()
-  const getTags = async () => {
-    const res = await fetch(`/api/tag`).then((res) => res.json())
+
+  const getTags = async (params?: { search_key: string }) => {
+    const res = await fetch(
+      `/api/tag?search_key=${params?.search_key || ''}`
+    ).then((res) => res.json())
     setTagList(res.data)
+    setTableLoading(false)
   }
+  const deleteTag = async (id: number) => {
+    await fetch(`/api/tag/${id}`, {
+      method: 'DELETE',
+    })
+    message.success('操作成功')
+    handleSearch()
+  }
+  const handleSearch = (val?: string) => {
+    getTags({ search_key: val || '' })
+  }
+
   const createTag = async () => {
     const params = tagForm.getFieldsValue()
     await fetch(`/api/tag`, {
@@ -18,6 +35,7 @@ const TagList = () => {
       },
       body: JSON.stringify(params),
     })
+    tagForm.resetFields()
     getTags()
   }
 
@@ -46,6 +64,19 @@ const TagList = () => {
       title: '操作',
       dataIndex: 'id',
       key: 'id',
+      render: (v: number) => {
+        return (
+          <Button
+            style={{ paddingLeft: 0 }}
+            type="link"
+            onClick={() => {
+              deleteTag(v)
+            }}
+          >
+            删除
+          </Button>
+        )
+      },
     },
   ]
 
@@ -58,14 +89,18 @@ const TagList = () => {
       </Form>
     )
   }
-  const InputEl = <Input />
   useEffect(() => {
     getTags()
   }, [])
 
   return (
     <div>
-      <div style={{ backgroundColor: '#fff' }}>
+      <Space size={8} className={classes.tagHeader}>
+        <Input.Search
+          style={{ width: 240 }}
+          onSearch={handleSearch}
+          placeholder="搜索标签"
+        />
         <Popconfirm
           icon={null}
           title={renderCreateTagForm()}
@@ -73,11 +108,17 @@ const TagList = () => {
           okText="确定"
           cancelText="取消"
         >
-          <Button type="link">新增标签</Button>
+          <Button type="primary">新增标签</Button>
         </Popconfirm>
-      </div>
+      </Space>
       <div>
-        <Table columns={columns} dataSource={tagList} />
+        <Table
+          loading={tableLoading}
+          size="middle"
+          columns={columns}
+          rowKey="id"
+          dataSource={tagList}
+        />
       </div>
     </div>
   )
