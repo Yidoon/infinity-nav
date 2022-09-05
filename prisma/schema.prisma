@@ -15,10 +15,10 @@ model navs {
   tags        String?
   title       String?
   icon        String?
-  created_at   DateTime @default(now())
-  updated_at  DateTime @updatedAt
   remark      String?
   category    Json?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 }
 
 model rule {

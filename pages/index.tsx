@@ -4,6 +4,7 @@ import SiteLogo from '@/components/SiteLogo'
 import CategorySetting from '@/components/CategorySetting'
 import Category from '@/components/Category'
 import HeaderContent from '@/components/Header'
+import TagList from '@/components/TagList'
 
 const { Header, Sider, Content } = Layout
 const Home: NextPage = () => {
@@ -13,15 +14,14 @@ const Home: NextPage = () => {
         <div
           style={{
             borderRight: '1px solid rgba(0,0,0,0.08)',
-            display: 'flex',
-            flexDirection: 'column',
             height: '100vh',
-            justifyContent: 'space-between',
+            paddingLeft: 16,
           }}
         >
           <SiteLogo />
-          <Category />
-          <CategorySetting />
+          <TagList />
+          {/* <Category /> */}
+          {/* <CategorySetting /> */}
         </div>
       </Sider>
       <Layout>
